@@ -1,0 +1,31 @@
+name,category,selling_price,price_source
+Paneer Butter Masala,Main Course,240,illustrative_demo_price
+Shahi Paneer,Main Course,260,illustrative_demo_price
+Kadai Paneer,Main Course,250,illustrative_demo_price
+Palak Paneer,Main Course,230,illustrative_demo_price
+Paneer Tikka,Starters,220,illustrative_demo_price
+Dal Tadka,Main Course,180,illustrative_demo_price
+Dal Makhani,Main Course,210,illustrative_demo_price
+Chole Masala,Main Course,170,illustrative_demo_price
+Aloo Gobi,Main Course,170,illustrative_demo_price
+Mix Veg,Main Course,190,illustrative_demo_price
+Jeera Rice,Rice,140,illustrative_demo_price
+Veg Pulao,Rice,180,illustrative_demo_price
+Veg Biryani,Rice,220,illustrative_demo_price
+Paneer Biryani,Rice,250,illustrative_demo_price
+Chicken Biryani,Rice,280,illustrative_demo_price
+Butter Naan,Breads,45,illustrative_demo_price
+Tandoori Roti,Breads,25,illustrative_demo_price
+Plain Roti,Breads,15,illustrative_demo_price
+Garlic Naan,Breads,60,illustrative_demo_price
+Masala Dosa,South Indian,120,illustrative_demo_price
+Idli,South Indian,60,illustrative_demo_price
+Veg Manchurian,Chinese,190,illustrative_demo_price
+Hakka Noodles,Chinese,180,illustrative_demo_price
+Chilli Paneer,Chinese,220,illustrative_demo_price
+Tomato Soup,Soup,100,illustrative_demo_price
+Manchow Soup,Soup,110,illustrative_demo_price
+Veg Sandwich,Snacks,130,illustrative_demo_price
+French Fries,Snacks,120,illustrative_demo_price
+Gulab Jamun,Dessert,60,illustrative_demo_price
+Fresh Lime Soda,Beverages,70,illustrative_demo_price

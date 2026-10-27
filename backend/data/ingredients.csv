@@ -1,0 +1,32 @@
+name,category,quantity,unit,min_stock,price,expiry,data_source
+Tomatoes,Vegetables,15,kg,8,35,2026-11-05,illustrative_demo_inventory
+Paneer,Dairy,1.5,kg,4,320,2026-11-02,illustrative_demo_inventory
+Onions,Vegetables,15,kg,7,40,2026-11-05,illustrative_demo_inventory
+Cooking Oil,Oils,12,L,5,150,2027-03-20,illustrative_demo_inventory
+Basmati Rice,Grains,25,kg,10,90,2027-01-30,illustrative_demo_inventory
+Salt,Pantry,6,kg,2,10,2027-12-31,illustrative_demo_inventory
+Potato,Vegetables,50,kg,10,50,2026-11-05,illustrative_demo_inventory
+Wheat Flour,Grains,30,kg,10,40,2027-03-31,illustrative_demo_inventory
+Maida,Grains,15,kg,5,45,2027-03-31,illustrative_demo_inventory
+Milk,Dairy,10,L,4,60,2026-11-02,illustrative_demo_inventory
+Cream,Dairy,5,L,2,220,2026-11-02,illustrative_demo_inventory
+Butter,Dairy,5,kg,2,500,2026-12-31,illustrative_demo_inventory
+Yogurt,Dairy,8,kg,3,90,2026-11-03,illustrative_demo_inventory
+Chicken,Meat,10,kg,4,260,2026-11-02,illustrative_demo_inventory
+Eggs,Dairy,120,pcs,30,7,2026-11-10,illustrative_demo_inventory
+Capsicum,Vegetables,8,kg,3,80,2026-11-03,illustrative_demo_inventory
+Carrots,Vegetables,8,kg,3,50,2026-11-05,illustrative_demo_inventory
+Cauliflower,Vegetables,8,kg,3,60,2026-11-05,illustrative_demo_inventory
+Spinach,Vegetables,4,kg,2,40,2026-11-02,illustrative_demo_inventory
+Green Peas,Vegetables,6,kg,2,100,2026-11-03,illustrative_demo_inventory
+Ginger Garlic Paste,Pantry,4,kg,1,140,2026-12-31,illustrative_demo_inventory
+Paneer Masala Spice,Spices,2,kg,0.5,300,2027-12-31,illustrative_demo_inventory
+Garam Masala,Spices,2,kg,0.5,400,2027-12-31,illustrative_demo_inventory
+Lentils,Grains,12,kg,4,130,2027-06-30,illustrative_demo_inventory
+Chickpeas,Grains,10,kg,3,100,2027-06-30,illustrative_demo_inventory
+Noodles,Grains,8,kg,3,100,2027-06-30,illustrative_demo_inventory
+Vinegar,Pantry,3,L,1,80,2027-06-30,illustrative_demo_inventory
+Lemons,Vegetables,5,kg,2,70,2026-11-05,illustrative_demo_inventory
+Sugar,Pantry,8,kg,3,45,2027-12-31,illustrative_demo_inventory
+Soft Drink Syrup,Beverages,4,L,1,180,2027-06-30,illustrative_demo_inventory
+Rice,Grains,10,kg,4,70,2027-01-30,illustrative_demo_inventory

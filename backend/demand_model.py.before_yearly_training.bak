@@ -1,0 +1,133 @@
+"""LSTM demand forecasting prototype using synthetic demonstration data."""
+import math
+import random
+
+import numpy as np
+import torch
+from torch import nn
+
+SEED = 42
+random.seed(SEED)
+np.random.seed(SEED)
+torch.manual_seed(SEED)
+
+DEVICE = torch.device(
+    "mps" if torch.backends.mps.is_available() else "cpu"
+)
+SEQUENCE_LENGTH = 14
+SCALE = 100.0
+
+
+def make_demo_sales(days=240):
+    """Generate illustrative daily sales, not actual restaurant records."""
+    weekday_pattern = [0, -5, -3, 2, 8, 17, 12]
+    sales = []
+
+    for day in range(days):
+        trend = day * 0.025
+        noise = random.gauss(0, 3)
+        demand = 38 + weekday_pattern[day % 7] + trend + noise
+        sales.append(max(5.0, demand))
+
+    return np.asarray(sales, dtype=np.float32)
+
+
+def weekday_features(day_index):
+    angle = 2 * math.pi * (day_index % 7) / 7
+    return math.sin(angle), math.cos(angle)
+
+
+def make_training_data(sales, split):
+    features = []
+
+    for day, demand in enumerate(sales):
+        sin_day, cos_day = weekday_features(day)
+        features.append([float(demand) / SCALE, sin_day, cos_day])
+
+    features = np.asarray(features, dtype=np.float32)
+    x_values, y_values = [], []
+
+    for target_day in range(SEQUENCE_LENGTH, split):
+        history = features[target_day - SEQUENCE_LENGTH:target_day]
+        target_sin, target_cos = weekday_features(target_day)
+
+        # Tell the LSTM which weekday it is predicting.
+        target_calendar = np.tile(
+            [target_sin, target_cos],
+            (SEQUENCE_LENGTH, 1),
+        )
+        x_values.append(np.concatenate([history, target_calendar], axis=1))
+        y_values.append(float(sales[target_day]) / SCALE)
+
+    return (
+        torch.tensor(np.asarray(x_values, dtype=np.float32), dtype=torch.float32, device=DEVICE),
+        torch.tensor(
+            np.asarray(y_values, dtype=np.float32).reshape(-1, 1),
+            dtype=torch.float32,
+            device=DEVICE,
+        ),
+        features,
+    )
+
+
+class DemandLSTM(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.lstm = nn.LSTM(
+            input_size=5,
+            hidden_size=16,
+            num_layers=1,
+            batch_first=True,
+        )
+        self.output = nn.Linear(16, 1)
+
+    def forward(self, sequence):
+        output, _ = self.lstm(sequence)
+        return self.output(output[:, -1, :])
+
+
+def train_and_forecast():
+    sales = make_demo_sales()
+    split = 190
+    x_train, y_train, features = make_training_data(sales, split)
+
+    model = DemandLSTM().to(DEVICE)
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
+    loss_function = nn.MSELoss()
+
+    model.train()
+    for _ in range(60):
+        optimizer.zero_grad()
+        prediction = model(x_train)
+        loss = loss_function(prediction, y_train)
+        loss.backward()
+        optimizer.step()
+
+    model.eval()
+    next_day = len(sales)
+    target_sin, target_cos = weekday_features(next_day)
+    history = features[-SEQUENCE_LENGTH:]
+    target_calendar = np.tile(
+        [target_sin, target_cos],
+        (SEQUENCE_LENGTH, 1),
+    )
+    sequence = np.concatenate([history, target_calendar], axis=1)
+
+    with torch.no_grad():
+        tensor = torch.tensor(
+            sequence[None, :, :],
+            dtype=torch.float32,
+            device=DEVICE,
+        )
+        forecast = float(model(tensor).item() * SCALE)
+
+    return max(0, round(forecast)), float(loss.item()), DEVICE.type
+
+
+if __name__ == "__main__":
+    prediction, training_loss, device = train_and_forecast()
+    print("LSTM training completed successfully.")
+    print(f"Device: {device}")
+    print(f"Next-day demo demand: {prediction} portions")
+    print(f"Final training loss: {training_loss:.6f}")
+    print("Data source: synthetic demonstration data")

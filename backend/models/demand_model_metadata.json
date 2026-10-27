@@ -1,0 +1,19 @@
+{
+  "model": "LSTM",
+  "menu_item_id": 1,
+  "menu_item": "Paneer Butter Masala",
+  "training_days": 365,
+  "training_start": "2025-10-26",
+  "training_end": "2026-10-25",
+  "forecast_date": "2026-10-26",
+  "sequence_length": 14,
+  "device": "mps",
+  "seed": 42,
+  "data_type": "synthetic",
+  "evaluation_method": "chronological holdout; one-step predictions",
+  "holdout_days": 73,
+  "holdout_mae_portions": 5.247,
+  "holdout_rmse_portions": 6.236,
+  "weights_file": "/Users/sreeamrutha/restaurant-inventory/backend/models/demand_lstm.pt",
+  "dataset_file": "/Users/sreeamrutha/restaurant-inventory/backend/data/synthetic_daily_sales.csv"
+}

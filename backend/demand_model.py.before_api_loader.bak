@@ -1,0 +1,209 @@
+"""Train and save an LSTM demand model using 365 days of synthetic sales."""
+import csv
+import json
+import math
+import random
+from datetime import date, timedelta
+from pathlib import Path
+
+import numpy as np
+import torch
+from torch import nn
+
+BASE = Path(__file__).resolve().parent
+DATA_DIR = BASE / "data"
+MODEL_DIR = BASE / "models"
+CSV_PATH = DATA_DIR / "synthetic_daily_sales.csv"
+MODEL_PATH = MODEL_DIR / "demand_lstm.pt"
+META_PATH = MODEL_DIR / "demand_model_metadata.json"
+
+SEED = 42
+SEQUENCE_LENGTH = 14
+SCALE = 100.0
+MENU_ITEM_ID = 1
+MENU_ITEM_NAME = "Paneer Butter Masala"
+DEVICE = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
+
+random.seed(SEED)
+np.random.seed(SEED)
+torch.manual_seed(SEED)
+
+
+def calendar_features(day):
+    weekday_angle = 2 * math.pi * day.weekday() / 7
+    year_length = 366 if date(day.year, 12, 31).timetuple().tm_yday == 366 else 365
+    year_angle = 2 * math.pi * day.timetuple().tm_yday / year_length
+    return (
+        math.sin(weekday_angle),
+        math.cos(weekday_angle),
+        math.sin(year_angle),
+        math.cos(year_angle),
+    )
+
+
+def generate_year():
+    """Generate one reproducible year ending today, without changing PostgreSQL."""
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    MODEL_DIR.mkdir(parents=True, exist_ok=True)
+
+    end_day = date.today()
+    start_day = end_day - timedelta(days=364)
+    rng = random.Random(SEED)
+    weekday_effect = [-5, -3, -2, 2, 8, 17, 12]
+    rows = []
+
+    for index in range(365):
+        day = start_day + timedelta(days=index)
+        trend = index * 0.025
+        annual_season = 4 * math.sin(2 * math.pi * index / 365)
+        weekend_event = 3 if day.weekday() in (5, 6) else 0
+        noise = rng.gauss(0, 3.0)
+        portions = max(
+            5,
+            round(38 + weekday_effect[day.weekday()] + trend
+                  + annual_season + weekend_event + noise),
+        )
+        rows.append({
+            "date": day.isoformat(),
+            "menu_item_id": MENU_ITEM_ID,
+            "menu_item": MENU_ITEM_NAME,
+            "portions_sold": portions,
+            "data_type": "synthetic",
+        })
+
+    with CSV_PATH.open("w", newline="", encoding="utf-8") as file:
+        writer = csv.DictWriter(file, fieldnames=rows[0].keys())
+        writer.writeheader()
+        writer.writerows(rows)
+
+    return rows
+
+
+def make_sequence(rows, target_index):
+    """Create 14-day sales history plus the target day's calendar features."""
+    sequence = []
+    target_day = date.fromisoformat(rows[target_index]["date"])
+    target_weekday = calendar_features(target_day)[:2]
+
+    for row in rows[target_index - SEQUENCE_LENGTH:target_index]:
+        day = date.fromisoformat(row["date"])
+        sequence.append([
+            float(row["portions_sold"]) / SCALE,
+            *calendar_features(day),
+            *target_weekday,
+        ])
+
+    return np.asarray(sequence, dtype=np.float32)
+
+
+class DemandLSTM(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.lstm = nn.LSTM(
+            input_size=7, hidden_size=16, num_layers=1, batch_first=True
+        )
+        self.output = nn.Linear(16, 1)
+
+    def forward(self, sequence):
+        outputs, _ = self.lstm(sequence)
+        return self.output(outputs[:, -1, :])
+
+
+def fit_model(rows, end_index, epochs=80):
+    sequences, targets = [], []
+    for index in range(SEQUENCE_LENGTH, end_index):
+        sequences.append(make_sequence(rows, index))
+        targets.append(float(rows[index]["portions_sold"]) / SCALE)
+
+    x = torch.tensor(np.asarray(sequences), dtype=torch.float32, device=DEVICE)
+    y = torch.tensor(np.asarray(targets), dtype=torch.float32, device=DEVICE).view(-1, 1)
+
+    model = DemandLSTM().to(DEVICE)
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
+    loss_fn = nn.MSELoss()
+
+    model.train()
+    for _ in range(epochs):
+        optimizer.zero_grad()
+        loss = loss_fn(model(x), y)
+        loss.backward()
+        optimizer.step()
+
+    return model
+
+
+def predict(model, rows, target_index):
+    model.eval()
+    sequence = torch.tensor(
+        make_sequence(rows, target_index)[None, :, :],
+        dtype=torch.float32,
+        device=DEVICE,
+    )
+    with torch.no_grad():
+        scaled = float(model(sequence).item())
+    return max(0, round(scaled * SCALE))
+
+
+def train_and_save():
+    rows = generate_year()
+    split = int(len(rows) * 0.8)
+
+    # Evaluate chronologically on the final 20% of the year.
+    evaluation_model = fit_model(rows, split)
+    actuals, predicted = [], []
+
+    for index in range(split, len(rows)):
+        predicted.append(predict(evaluation_model, rows, index))
+        actuals.append(int(rows[index]["portions_sold"]))
+
+    mae = float(np.mean(np.abs(np.asarray(actuals) - np.asarray(predicted))))
+    rmse = float(np.sqrt(np.mean((np.asarray(actuals) - np.asarray(predicted)) ** 2)))
+
+    # Train the deployable model using the complete 365-day dataset.
+    final_model = fit_model(rows, len(rows), epochs=100)
+    final_model.eval()
+    torch.save(final_model.state_dict(), MODEL_PATH)
+
+    metadata = {
+        "model": "LSTM",
+        "menu_item_id": MENU_ITEM_ID,
+        "menu_item": MENU_ITEM_NAME,
+        "training_days": len(rows),
+        "training_start": rows[0]["date"],
+        "training_end": rows[-1]["date"],
+        "forecast_date": (date.fromisoformat(rows[-1]["date"]) + timedelta(days=1)).isoformat(),
+        "sequence_length": SEQUENCE_LENGTH,
+        "device": DEVICE.type,
+        "seed": SEED,
+        "data_type": "synthetic",
+        "evaluation_method": "chronological holdout; one-step predictions",
+        "holdout_days": len(actuals),
+        "holdout_mae_portions": round(mae, 3),
+        "holdout_rmse_portions": round(rmse, 3),
+        "weights_file": str(MODEL_PATH),
+        "dataset_file": str(CSV_PATH),
+    }
+    META_PATH.write_text(json.dumps(metadata, indent=2), encoding="utf-8")
+
+    next_day = date.fromisoformat(rows[-1]["date"]) + timedelta(days=1)
+    forecast = predict(final_model, rows + [{
+        "date": next_day.isoformat(),
+        "portions_sold": 0,
+    }], len(rows))
+
+    print("\nLSTM TRAINING COMPLETE")
+    print(f"Dataset: {CSV_PATH}")
+    print(f"Rows: {len(rows)} daily records")
+    print(f"Date range: {rows[0]['date']} to {rows[-1]['date']}")
+    print(f"Training device: {DEVICE}")
+    print(f"Holdout MAE: {mae:.2f} portions")
+    print(f"Holdout RMSE: {rmse:.2f} portions")
+    print(f"Forecast date: {next_day}")
+    print(f"Predicted portions: {forecast}")
+    print(f"Saved model: {MODEL_PATH}")
+    print(f"Saved metadata: {META_PATH}")
+    print("IMPORTANT: all training sales records are synthetic.")
+
+
+if __name__ == "__main__":
+    train_and_save()

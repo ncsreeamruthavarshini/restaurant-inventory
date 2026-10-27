@@ -1,0 +1,124 @@
+menu_item_name,ingredient_name,quantity_per_portion,quantity_unit,data_source
+Paneer Butter Masala,Paneer,0.15,kg,estimated_demo_recipe
+Paneer Butter Masala,Tomatoes,0.1,kg,estimated_demo_recipe
+Paneer Butter Masala,Onions,0.04,kg,estimated_demo_recipe
+Paneer Butter Masala,Cream,0.02,L,estimated_demo_recipe
+Paneer Butter Masala,Butter,0.015,kg,estimated_demo_recipe
+Shahi Paneer,Paneer,0.15,kg,estimated_demo_recipe
+Shahi Paneer,Tomatoes,0.08,kg,estimated_demo_recipe
+Shahi Paneer,Onions,0.05,kg,estimated_demo_recipe
+Shahi Paneer,Cream,0.025,L,estimated_demo_recipe
+Shahi Paneer,Butter,0.01,kg,estimated_demo_recipe
+Kadai Paneer,Paneer,0.15,kg,estimated_demo_recipe
+Kadai Paneer,Tomatoes,0.08,kg,estimated_demo_recipe
+Kadai Paneer,Onions,0.05,kg,estimated_demo_recipe
+Kadai Paneer,Capsicum,0.04,kg,estimated_demo_recipe
+Kadai Paneer,Cooking Oil,0.015,L,estimated_demo_recipe
+Palak Paneer,Paneer,0.13,kg,estimated_demo_recipe
+Palak Paneer,Spinach,0.12,kg,estimated_demo_recipe
+Palak Paneer,Onions,0.04,kg,estimated_demo_recipe
+Palak Paneer,Cooking Oil,0.015,L,estimated_demo_recipe
+Paneer Tikka,Paneer,0.18,kg,estimated_demo_recipe
+Paneer Tikka,Yogurt,0.04,kg,estimated_demo_recipe
+Paneer Tikka,Capsicum,0.04,kg,estimated_demo_recipe
+Paneer Tikka,Onions,0.03,kg,estimated_demo_recipe
+Dal Tadka,Lentils,0.1,kg,estimated_demo_recipe
+Dal Tadka,Tomatoes,0.04,kg,estimated_demo_recipe
+Dal Tadka,Onions,0.03,kg,estimated_demo_recipe
+Dal Tadka,Butter,0.01,kg,estimated_demo_recipe
+Dal Makhani,Lentils,0.1,kg,estimated_demo_recipe
+Dal Makhani,Tomatoes,0.05,kg,estimated_demo_recipe
+Dal Makhani,Cream,0.02,L,estimated_demo_recipe
+Dal Makhani,Butter,0.015,kg,estimated_demo_recipe
+Chole Masala,Chickpeas,0.12,kg,estimated_demo_recipe
+Chole Masala,Tomatoes,0.05,kg,estimated_demo_recipe
+Chole Masala,Onions,0.04,kg,estimated_demo_recipe
+Chole Masala,Cooking Oil,0.01,L,estimated_demo_recipe
+Aloo Gobi,Potato,0.12,kg,estimated_demo_recipe
+Aloo Gobi,Cauliflower,0.12,kg,estimated_demo_recipe
+Aloo Gobi,Tomatoes,0.03,kg,estimated_demo_recipe
+Aloo Gobi,Cooking Oil,0.015,L,estimated_demo_recipe
+Mix Veg,Carrots,0.04,kg,estimated_demo_recipe
+Mix Veg,Cauliflower,0.05,kg,estimated_demo_recipe
+Mix Veg,Green Peas,0.04,kg,estimated_demo_recipe
+Mix Veg,Capsicum,0.04,kg,estimated_demo_recipe
+Mix Veg,Cooking Oil,0.015,L,estimated_demo_recipe
+Jeera Rice,Basmati Rice,0.1,kg,estimated_demo_recipe
+Jeera Rice,Cooking Oil,0.008,L,estimated_demo_recipe
+Jeera Rice,Salt,0.002,kg,estimated_demo_recipe
+Veg Pulao,Basmati Rice,0.1,kg,estimated_demo_recipe
+Veg Pulao,Carrots,0.03,kg,estimated_demo_recipe
+Veg Pulao,Green Peas,0.03,kg,estimated_demo_recipe
+Veg Pulao,Cooking Oil,0.012,L,estimated_demo_recipe
+Veg Biryani,Basmati Rice,0.12,kg,estimated_demo_recipe
+Veg Biryani,Yogurt,0.03,kg,estimated_demo_recipe
+Veg Biryani,Onions,0.04,kg,estimated_demo_recipe
+Veg Biryani,Carrots,0.03,kg,estimated_demo_recipe
+Veg Biryani,Cooking Oil,0.015,L,estimated_demo_recipe
+Paneer Biryani,Basmati Rice,0.11,kg,estimated_demo_recipe
+Paneer Biryani,Paneer,0.1,kg,estimated_demo_recipe
+Paneer Biryani,Yogurt,0.03,kg,estimated_demo_recipe
+Paneer Biryani,Onions,0.04,kg,estimated_demo_recipe
+Paneer Biryani,Cooking Oil,0.015,L,estimated_demo_recipe
+Chicken Biryani,Basmati Rice,0.12,kg,estimated_demo_recipe
+Chicken Biryani,Chicken,0.15,kg,estimated_demo_recipe
+Chicken Biryani,Yogurt,0.03,kg,estimated_demo_recipe
+Chicken Biryani,Onions,0.05,kg,estimated_demo_recipe
+Chicken Biryani,Cooking Oil,0.02,L,estimated_demo_recipe
+Butter Naan,Maida,0.1,kg,estimated_demo_recipe
+Butter Naan,Yogurt,0.02,kg,estimated_demo_recipe
+Butter Naan,Butter,0.012,kg,estimated_demo_recipe
+Tandoori Roti,Wheat Flour,0.08,kg,estimated_demo_recipe
+Tandoori Roti,Salt,0.001,kg,estimated_demo_recipe
+Plain Roti,Wheat Flour,0.06,kg,estimated_demo_recipe
+Plain Roti,Salt,0.001,kg,estimated_demo_recipe
+Garlic Naan,Maida,0.1,kg,estimated_demo_recipe
+Garlic Naan,Yogurt,0.02,kg,estimated_demo_recipe
+Garlic Naan,Butter,0.01,kg,estimated_demo_recipe
+Garlic Naan,Ginger Garlic Paste,0.005,kg,estimated_demo_recipe
+Masala Dosa,Potato,0.12,kg,estimated_demo_recipe
+Masala Dosa,Cooking Oil,0.015,L,estimated_demo_recipe
+Masala Dosa,Onions,0.03,kg,estimated_demo_recipe
+Idli,Rice,0.1,kg,estimated_demo_recipe
+Idli,Salt,0.001,kg,estimated_demo_recipe
+Veg Manchurian,Carrots,0.04,kg,estimated_demo_recipe
+Veg Manchurian,Capsicum,0.04,kg,estimated_demo_recipe
+Veg Manchurian,Onions,0.03,kg,estimated_demo_recipe
+Veg Manchurian,Maida,0.04,kg,estimated_demo_recipe
+Veg Manchurian,Cooking Oil,0.02,L,estimated_demo_recipe
+Veg Manchurian,Vinegar,0.005,L,estimated_demo_recipe
+Hakka Noodles,Noodles,0.12,kg,estimated_demo_recipe
+Hakka Noodles,Capsicum,0.04,kg,estimated_demo_recipe
+Hakka Noodles,Carrots,0.04,kg,estimated_demo_recipe
+Hakka Noodles,Onions,0.03,kg,estimated_demo_recipe
+Hakka Noodles,Cooking Oil,0.015,L,estimated_demo_recipe
+Hakka Noodles,Vinegar,0.005,L,estimated_demo_recipe
+Chilli Paneer,Paneer,0.15,kg,estimated_demo_recipe
+Chilli Paneer,Capsicum,0.05,kg,estimated_demo_recipe
+Chilli Paneer,Onions,0.03,kg,estimated_demo_recipe
+Chilli Paneer,Cooking Oil,0.02,L,estimated_demo_recipe
+Chilli Paneer,Vinegar,0.005,L,estimated_demo_recipe
+Tomato Soup,Tomatoes,0.18,kg,estimated_demo_recipe
+Tomato Soup,Cream,0.015,L,estimated_demo_recipe
+Tomato Soup,Butter,0.008,kg,estimated_demo_recipe
+Tomato Soup,Salt,0.002,kg,estimated_demo_recipe
+Manchow Soup,Carrots,0.03,kg,estimated_demo_recipe
+Manchow Soup,Capsicum,0.02,kg,estimated_demo_recipe
+Manchow Soup,Onions,0.02,kg,estimated_demo_recipe
+Manchow Soup,Noodles,0.02,kg,estimated_demo_recipe
+Manchow Soup,Cooking Oil,0.01,L,estimated_demo_recipe
+Manchow Soup,Salt,0.002,kg,estimated_demo_recipe
+Veg Sandwich,Wheat Flour,0.08,kg,estimated_demo_recipe
+Veg Sandwich,Potato,0.05,kg,estimated_demo_recipe
+Veg Sandwich,Tomatoes,0.03,kg,estimated_demo_recipe
+Veg Sandwich,Onions,0.02,kg,estimated_demo_recipe
+Veg Sandwich,Butter,0.01,kg,estimated_demo_recipe
+French Fries,Potato,0.2,kg,estimated_demo_recipe
+French Fries,Cooking Oil,0.025,L,estimated_demo_recipe
+French Fries,Salt,0.002,kg,estimated_demo_recipe
+Gulab Jamun,Milk,0.08,L,estimated_demo_recipe
+Gulab Jamun,Sugar,0.04,kg,estimated_demo_recipe
+Gulab Jamun,Cooking Oil,0.015,L,estimated_demo_recipe
+Fresh Lime Soda,Lemons,0.04,kg,estimated_demo_recipe
+Fresh Lime Soda,Sugar,0.02,kg,estimated_demo_recipe
+Fresh Lime Soda,Soft Drink Syrup,0.02,L,estimated_demo_recipe
